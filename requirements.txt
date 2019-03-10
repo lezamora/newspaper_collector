@@ -15,7 +15,6 @@ pandas==0.24.1
 Pillow==5.4.1
 python-dateutil==2.8.0
 pytz==2018.9
-PyYAML==3.13
 requests==2.21.0
 requests-file==1.4.3
 selenium==3.141.0
