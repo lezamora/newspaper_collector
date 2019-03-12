@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 class StrategyGetUrl:
     def __init__(self, func=None, limit_date=None):
         self.section_url = ''
+        self.data_path = ''
         self.limit_date = limit_date
         self.urls = []
 
@@ -39,6 +40,7 @@ def rosario_3(self):
     date_limit = get_date(self.limit_date)
 
     self.section_url = config.rosario3_url
+    self.data_path = config.rosario3_data_path
 
     driver = self.instance_driver()
 
@@ -81,6 +83,7 @@ def el_ciudadano(self):
     no manipula fechas. Para fines practicos pasaremos como parametro un numero de pagina arbitrario.
     """
     self.section_url = config.elciudadano_url
+    self.data_path = config.elciudadano_data_path
 
     driver = self.instance_driver()
 
@@ -108,6 +111,7 @@ def rosario_plus(self):
     date_limit = get_date(self.limit_date)
 
     self.section_url = config.rosarioplus_url
+    self.data_path = config.rosarioplus_data_path
 
     driver = self.instance_driver()
 
@@ -156,8 +160,10 @@ def main(website, limit):
     """ El objetivo principal de este programa es obtener urls de algun portal solicitado y guardarlas
     fisicamente en el algun repositorio.
     """
-    strat1 = StrategyGetUrl(eval(website), limit)
-    strat1.execute()
+    news_list = StrategyGetUrl(eval(website), limit)
+    news_list.execute()
+
+
 
 
 if __name__ == '__main__':
