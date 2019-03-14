@@ -29,7 +29,7 @@ class StrategyGetUrl:
     def instance_driver(self):
         logging.info('Abriendo el navegador y redirigiendo hacia {}.'.format(self.section_url))
 
-        driver = webdriver.PhantomJS(config.driver_path)
+        driver = webdriver.Chrome(config.driver_path)
         driver.implicitly_wait(30)
         driver.get(self.section_url)
         return driver

@@ -1,6 +1,5 @@
 import datetime
 import os
-import csv
 import pandas as pd
 import logging
 
@@ -14,7 +13,7 @@ def get_date(s_date):
         try:
             return datetime.datetime.strptime(s_date, pattern).date()
         except:
-            pass
+            logger.info('Incorrect format.')
 
 
 def load_data(data_path, ext_type):
@@ -26,5 +25,6 @@ def load_data(data_path, ext_type):
 
 
 def save_data(df, data_path):
-    if not os.path.exists(data_path):
+    if os.path.exists(data_path):
         pd.DataFrame.to_csv(df, data_path, index_label=False)
+        logging.info('El dataframe se ha guardado de forma correcta.')
