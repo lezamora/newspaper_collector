@@ -1,5 +1,6 @@
 import types
 import re
+import csv
 import time
 import logging
 from logging.config import fileConfig
@@ -16,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 class StrategyGetUrl:
     def __init__(self, func=None, limit_date=None):
+        self.name = ''
         self.section_url = ''
         self.data_path = ''
         self.limit_date = limit_date
@@ -32,6 +34,13 @@ class StrategyGetUrl:
         driver.get(self.section_url)
         return driver
 
+    def run_collector(self):
+        with open(config.data_path, 'a', newline='') as csv_file:
+            for url in self.urls:
+                    writer = csv.writer(csv_file)
+                    writer.writerow([self.name, url, 0])
+        logging.info('Se ha guardado la info de forma correcta.')
+
 
 def rosario_3(self):
     """ Esta funcion devuelve todas las urls de la seccion de policiales del portal de noticias
@@ -39,8 +48,8 @@ def rosario_3(self):
     """
     date_limit = get_date(self.limit_date)
 
+    self.name = 'rosario 3'
     self.section_url = config.rosario3_url
-    self.data_path = config.rosario3_data_path
 
     driver = self.instance_driver()
 
@@ -61,7 +70,7 @@ def rosario_3(self):
         # Si todavia estamos dentro del limite temporal solicitado seguimos cargando noticias.
         try:
             driver.find_element_by_xpath('(//a[@class="btn btn-medium"])[1]').click()
-            time.sleep(3)
+            time.sleep(5)
         except NoSuchElementException as e:
             logging.exception("Exception occurred", exc_info=True)
 
@@ -82,8 +91,8 @@ def el_ciudadano(self):
     el ciudadano. La limit_date en esta funcion no tiene sentido ya que este por portal
     no manipula fechas. Para fines practicos pasaremos como parametro un numero de pagina arbitrario.
     """
+    self.name = 'el ciudadano'
     self.section_url = config.elciudadano_url
-    self.data_path = config.elciudadano_data_path
 
     driver = self.instance_driver()
 
@@ -92,12 +101,14 @@ def el_ciudadano(self):
 
     for i in range(1, int(self.limit_date) + 1):
         driver.get(self.section_url.format(i))
+        time.sleep(5)
 
         try:
             elements = driver.find_elements_by_xpath("//div[2]/h2/a")
         except NoSuchElementException as e:
             logging.exception("Exception occurred", exc_info=True)
-        self.urls = [e.get_attribute('href') for e in elements]
+        for e in elements:
+            self.urls.append(e.get_attribute('href'))
 
     logging.info('Se han recolectado {} urls.'.format(len(self.urls)))
     driver.quit()
@@ -110,8 +121,8 @@ def rosario_plus(self):
 
     date_limit = get_date(self.limit_date)
 
+    self.name = 'rosario plus'
     self.section_url = config.rosarioplus_url
-    self.data_path = config.rosarioplus_data_path
 
     driver = self.instance_driver()
 
@@ -162,8 +173,7 @@ def main(website, limit):
     """
     news_list = StrategyGetUrl(eval(website), limit)
     news_list.execute()
-
-
+    news_list.run_collector()
 
 
 if __name__ == '__main__':

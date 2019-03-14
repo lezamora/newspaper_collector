@@ -1,6 +1,10 @@
 import datetime
 import os
+import csv
 import pandas as pd
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_date(s_date):
@@ -18,7 +22,7 @@ def load_data(data_path, ext_type):
         if ext_type == 'csv':
             return pd.read_csv(data_path)
         else:
-            pass # print('Incorrect format.')
+            logger.info('Incorrect format.')
 
 
 def save_data(df, data_path):
