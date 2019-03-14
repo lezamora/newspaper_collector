@@ -5,7 +5,6 @@ class Config:
 
     ROSARIO3_URL = 'https://www.rosario3.com/seccion/noticias/policiales/'
     ELCIUDADANO_URL = 'https://www.elciudadanoweb.com/seccion/policiales/page/{}/'
-    ROSARIOPLUS_URL = 'https://www.rosarioplus.com/seccion/ensacoycorbata/seguridad/'
 
 
 log_path = Config.LOG_CONFIG_PATH
@@ -14,4 +13,3 @@ data_path = Config.DATA_PATH
 
 rosario3_url = Config.ROSARIO3_URL
 elciudadano_url = Config.ELCIUDADANO_URL
-rosarioplus_url = Config.ROSARIOPLUS_URL
