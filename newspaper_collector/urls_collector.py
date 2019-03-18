@@ -11,8 +11,12 @@ from selenium.common.exceptions import NoSuchElementException
 
 import config
 from helpers import get_date
+from model import create_session
+from model.news_article_model import NewsArticle
 
 logger = logging.getLogger(__name__)
+
+session = create_session()
 
 
 class StrategyGetUrl:
@@ -29,18 +33,17 @@ class StrategyGetUrl:
     def instance_driver(self):
         logging.info('Abriendo el navegador y redirigiendo hacia {}.'.format(self.section_url))
 
-        driver = webdriver.Chrome(config.driver_path)
+        driver = webdriver.PhantomJS(config.driver_path)
         driver.implicitly_wait(30)
         driver.get(self.section_url)
         return driver
 
     def run_collector(self):
-        with open(config.data_path, 'a', newline='') as csv_file:
-            for url in self.urls:
-                    writer = csv.writer(csv_file)
-                    writer.writerow([self.name, url, 0])
+        for url in self.urls:
+            ed_user = NewsArticle(website=self.name, url=url)
+            session.add(ed_user)
+            session.commit()
         logging.info('Se ha guardado la info de forma correcta.')
-
 
 def rosario_3(self):
     """ Esta funcion devuelve todas las urls de la seccion de policiales del portal de noticias
