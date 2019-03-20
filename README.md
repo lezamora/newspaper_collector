@@ -1,39 +1,45 @@
-#### FLASK RESTFUL API BOILER-PLATE WITH JWT
+# Newspaper collector
 
-### Terminal commands
-
-    Initial installation: make install
-
-    To run test: make tests
-
-    To run application: make run
-
-    To run all commands at once : make all
+Proyecto para realizar scraping de sitios de noticias.
 
 
-### Viewing the app ###
+### Prerequisites
 
-    Open the following url on your browser to view swagger documentation
-    http://127.0.0.1:5000/
-
-
-### Using Postman ####
-
-    Authorization header is in the following format:
-
-    Key: Authorization
-    Value: "token_generated_during_login"
-
-    For testing authorization, url for getting all user requires an admin token while url for getting a single
-    user by public_id requires just a regular authentication.
-
-### Full description and guide ###
-https://medium.freecodecamp.org/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563
+Ver requirements.txt para ver los paquetes utilizados.
 
 
-### Contributing
-If you want to contribute to this flask restplus boilerplate, clone the repository and just start making pull requests.
+### Running
+
+Para correr el recolector de urls.
+Los sitios implementados son rosario_3 y el_ciudadano.
+
+El limite para rosario_3 es una fecha con formato dd-mm-YYYY.
+El limite para el_ciudadano es numero de paginas.
 
 ```
-https://github.com/cosmic-byte/flask-restplus-boilerplate.git
+python url_collector.py --website rosario_3 --limit 01-01-2019
 ```
+
+Para correr el recolector de noticias.
+
+```
+python text_recolector.py --nrows 100
+```
+
+Donde nrows es el numero de noticias a descargar.
+
+
+ Ver el makefile para mas informacion.
+ 
+## Built With
+
+* [Newspaper3k](https://newspaper.readthedocs.io/en/latest/) - Article scraping and curation
+* [SqlAlchemy](https://www.sqlalchemy.org/) - ORM
+* [Selenium Webdriver](https://www.seleniumhq.org/) - Selenium automates browsers
+
+p://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Lucas Zamora** - *Initial work* - [lezamora](https://github.com/lezamora)
+
