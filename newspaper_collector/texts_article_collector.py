@@ -10,7 +10,6 @@ import config
 from model import create_session
 from model.news_article_model import NewsArticle
 
-logger = logging.getLogger(__name__)
 timeDelay = random.randrange(3, 10)
 session = create_session()
 
@@ -37,7 +36,7 @@ def run_collector(nrows=100):
 
             logging.info('El articulo con id {} ha sido descargado y guardado.'.format(new.id))
 
-        except Exception as e:
+        except Exception:
             logging.exception("Exception occurred", exc_info=True)
 
 

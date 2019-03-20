@@ -14,8 +14,6 @@ from helpers import get_date
 from model import create_session
 from model.news_article_model import NewsArticle
 
-logger = logging.getLogger(__name__)
-
 session = create_session()
 
 
